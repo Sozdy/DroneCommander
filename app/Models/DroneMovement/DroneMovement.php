@@ -26,7 +26,7 @@ class DroneMovement extends Model
         'current_position',
     ];
 
-    public function scopeLatestRecord(Builder $query): Builder
+    public function scopeLatestRecord(Builder $query): Builder|Model
     {
         return $query->orderByDesc('created_at')
             ->orderByDesc('id');

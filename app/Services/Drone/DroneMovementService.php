@@ -2,6 +2,8 @@
 
 namespace App\Services\Drone;
 
+use App\Actions\Drone\ConvertPathToCommandsDroneAction;
+use App\Actions\Drone\GetOptimalPathDroneAction;
 use App\Actions\Drone\GetStartPositionDroneAction;
 use App\Actions\Drone\MoveDroneAction;
 use App\Actions\Drone\MoveDroneWithoutWallsAction;
@@ -20,7 +22,9 @@ class DroneMovementService implements IDroneMovementService
     {
         $flight_quad = Quad::make(config('drone.flight_field.width'), config('drone.flight_field.height'));
 
-        $start_position = App::make(GetStartPositionDroneAction::class)->execute($drone_move_dto);
+        $start_position = $drone_move_dto->start_position ??
+            DroneMovement::latestRecord()->first()?->current_position ??
+            Vector2D::zero();
         $current_position = $start_position;
 
         if ($flight_quad->isOutOfBounds($start_position)) {
@@ -43,8 +47,18 @@ class DroneMovementService implements IDroneMovementService
         return $current_position;
     }
 
-    public function calculateOptimalWay(?Vector2D $start_position, Vector2D $final_position): array
+    public function calculateOptimalCommands(?Vector2D $start_position, Vector2D $final_position): array
     {
-        return [];
+        $flight_quad = Quad::make(config('drone.flight_field.width'), config('drone.flight_field.height'));
+        if ($flight_quad->isOutOfBounds($start_position)) {
+            throw new OutOfBoundException(
+                "Start position is out of bounds. Start_position: $start_position",
+                Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $path = App::make(GetOptimalPathDroneAction::class)
+            ->execute($start_position, $final_position, $flight_quad);
+
+        return App::make(ConvertPathToCommandsDroneAction::class)->execute($path);
     }
 }

@@ -6,7 +6,6 @@ use App\Exceptions\Vector2DInvalidArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
-use Symfony\Component\HttpFoundation\Response;
 
 class Vector2D implements Arrayable, Jsonable, JsonSerializable
 {
@@ -166,22 +165,15 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
         return $this->toJson();
     }
 
-    public function toAbbreviation(): string
+    public function toAbbreviation(): ?string
     {
-        $abbreviation = '';
-
-        if ($this->y > 0) {
-            $abbreviation .= 'Up';
-        } elseif ($this->y < 0) {
-            $abbreviation .= 'Down';
-        }
-
-        if ($this->x < 0) {
-            $abbreviation .= 'Left';
-        } elseif ($this->x > 0) {
-            $abbreviation .= 'Right';
-        }
-
-        return $abbreviation ?: 'Zero';
+        return match (true) {
+            static::up()->equals($this) => 'Up',
+            static::down()->equals($this) => 'Down',
+            static::left()->equals($this) => 'Left',
+            static::right()->equals($this) => 'Right',
+            static::zero()->equals($this) => 'Zero',
+            default => null,
+        };
     }
 }

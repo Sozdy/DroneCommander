@@ -14,5 +14,5 @@ interface IDroneMovementService
      * @param Vector2D $final_position
      * @return Vector2D[]
      */
-    public function calculateOptimalWay(?Vector2D $start_position, Vector2D $final_position): array;
+    public function calculateOptimalCommands(?Vector2D $start_position, Vector2D $final_position): array;
 }
