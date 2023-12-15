@@ -2,18 +2,12 @@
 
 namespace App\Actions\Drone;
 
-use App\Exceptions\OutOfBoundException;
-use App\Models\DroneMovement\DroneMovement;
 use App\ValueObjects\Quad;
 use App\ValueObjects\Vector2D;
-use Symfony\Component\HttpFoundation\Response;
 
 class GetOptimalPathDroneAction
 {
     /**
-     * @param Vector2D $start_position
-     * @param Vector2D $final_position
-     * @param Quad $flight_quad
      * @return Vector2D[]
      */
     public function execute(Vector2D $start_position, Vector2D $final_position, Quad $flight_quad): array
@@ -25,7 +19,7 @@ class GetOptimalPathDroneAction
         $is_found = false;
         $target = null;
 
-        while (!$queue->isEmpty()) {
+        while (! $queue->isEmpty()) {
             $current = $queue->shift();
 
             if ($final_position->equals($current)) {
@@ -51,7 +45,7 @@ class GetOptimalPathDroneAction
             }
         }
 
-        if (!$is_found) {
+        if (! $is_found) {
             return [];
         }
 
@@ -62,6 +56,7 @@ class GetOptimalPathDroneAction
     {
         $visited = [];
         $visited[$start_position->getX()][$start_position->getY()] = true;
+
         return $visited;
     }
 
@@ -69,6 +64,7 @@ class GetOptimalPathDroneAction
     {
         $parent = [];
         $parent[$start_position->getX()][$start_position->getY()] = null;
+
         return $parent;
     }
 
@@ -90,12 +86,14 @@ class GetOptimalPathDroneAction
     private function markVisited(array $visited, Vector2D $position): array
     {
         $visited[$position->getX()][$position->getY()] = true;
+
         return $visited;
     }
 
     private function setParent(array $parent, Vector2D $position, Vector2D $parent_position): array
     {
         $parent[$position->getX()][$position->getY()] = $parent_position;
+
         return $parent;
     }
 
@@ -108,6 +106,7 @@ class GetOptimalPathDroneAction
             $current = $parent[$current->getX()][$current->getY()];
         }
         $path[] = $start_position;
+
         return array_reverse($path);
     }
 }

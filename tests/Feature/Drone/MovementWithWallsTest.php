@@ -91,7 +91,7 @@ describe('movement test', function () {
     });
 });
 
-describe('get right position' , function () {
+describe('get right position', function () {
     test('case 1: move up', function () {
         $data = [
             'body_request' => [

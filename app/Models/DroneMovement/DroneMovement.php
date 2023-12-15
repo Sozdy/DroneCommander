@@ -3,10 +3,9 @@
 namespace App\Models\DroneMovement;
 
 use App\Casts\AsVector2D;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class DroneMovement extends Model
 {

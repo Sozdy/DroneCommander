@@ -1,6 +1,5 @@
 <?php
 
-
 use App\ValueObjects\Quad;
 use App\ValueObjects\Vector2D;
 
@@ -42,4 +41,3 @@ test('position is not out of bounds', function () {
 
     expect($quad->isOutOfBounds($position))->toBeFalse();
 });
-

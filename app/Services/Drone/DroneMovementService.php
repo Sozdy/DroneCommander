@@ -4,7 +4,6 @@ namespace App\Services\Drone;
 
 use App\Actions\Drone\ConvertPathToCommandsDroneAction;
 use App\Actions\Drone\GetOptimalPathDroneAction;
-use App\Actions\Drone\GetStartPositionDroneAction;
 use App\Actions\Drone\MoveDroneAction;
 use App\Actions\Drone\MoveDroneWithoutWallsAction;
 use App\Actions\Drone\MoveDroneWithWallsAction;
@@ -23,7 +22,7 @@ class DroneMovementService implements IDroneMovementService
         $flight_quad = Quad::make(config('drone.flight_field.width'), config('drone.flight_field.height'));
 
         $start_position = $drone_move_dto->start_position ??
-            DroneMovement::latestRecord()->first()?->current_position ??
+            DroneMovement::query()->latestRecord()->first()?->current_position ??
             Vector2D::zero();
         $current_position = $start_position;
 

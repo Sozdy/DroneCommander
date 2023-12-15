@@ -6,7 +6,6 @@ use App\DTO\Drone\DroneMoveDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Drone\DroneMoveRequest;
 use App\Http\Responses\Drone\DroneMoveResponse;
-use App\Models\Drone\Drone;
 use App\Services\Drone\IDroneMovementService;
 use App\ValueObjects\Vector2D;
 use Illuminate\Support\Facades\App;
@@ -16,8 +15,7 @@ class DroneController extends Controller
 {
     public function __construct(
         private readonly IDroneMovementService $droneService,
-    )
-    {
+    ) {
     }
 
     public function move(DroneMoveRequest $request)
@@ -34,7 +32,7 @@ class DroneController extends Controller
                 DroneMoveResponse::class,
                 [
                     'final_position' => $final_position,
-                    'optimal_way'=>$optimal_way_commands
+                    'optimal_way' => $optimal_way_commands,
                 ]
             ),
             Response::HTTP_CREATED

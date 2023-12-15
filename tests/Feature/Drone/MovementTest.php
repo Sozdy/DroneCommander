@@ -39,7 +39,7 @@ describe('movement test out of bounds', function () {
     test('case 4', function () {
         $response = $this->postJson(route('drones.move'), [
             'commands' => 'up',
-            'start_position' => '99x99'
+            'start_position' => '99x99',
         ]);
 
         $response->assertJsonFragment([
@@ -51,11 +51,11 @@ describe('movement test out of bounds', function () {
     test('case 5', function () {
         $response = $this->postJson(route('drones.move'), [
             'commands' => 'right',
-            'start_position' => '99x99'
+            'start_position' => '99x99',
         ]);
 
         $response->assertJsonFragment([
-            'message' => 'Position 100x99 is out of bounds'
+            'message' => 'Position 100x99 is out of bounds',
         ]);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     });
@@ -98,7 +98,7 @@ describe('get right position', function () {
     test('case 4', function () {
         $response = $this->postJson(route('drones.move'), [
             'commands' => 'up,Up,UP,Right,RIGHT,right,down,Down,DOWN,Left,LEFT,left',
-            'start_position' => '50x50'
+            'start_position' => '50x50',
         ]);
 
         $response->assertJsonFragment([
@@ -110,7 +110,7 @@ describe('get right position', function () {
     test('case 5', function () {
         $response = $this->postJson(route('drones.move'), [
             'commands' => 'up,Up,UP,Right,RIGHT,right',
-            'start_position' => '50x50'
+            'start_position' => '50x50',
         ]);
 
         $response->assertJsonFragment([

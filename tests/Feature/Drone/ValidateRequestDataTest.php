@@ -1,4 +1,5 @@
 <?php
+
 use Symfony\Component\HttpFoundation\Response;
 
 describe('validate request data', function () {
@@ -31,13 +32,13 @@ describe('validate request data', function () {
                 'body_request' => [
                     'commands' => 'InvalidCommand',
                 ],
-                'expected_message' => 'Invalid abbreviation "InvalidCommand". Abbreviation can be only "down, left, right, up"'
+                'expected_message' => 'Invalid abbreviation "InvalidCommand". Abbreviation can be only "down, left, right, up"',
             ],
             'case_2' => [
                 'body_request' => [
                     'commands' => 'up,',
                 ],
-                'expected_message' => 'Invalid abbreviation "". Abbreviation can be only "down, left, right, up"'
+                'expected_message' => 'Invalid abbreviation "". Abbreviation can be only "down, left, right, up"',
             ],
         ];
 
@@ -56,35 +57,35 @@ describe('validate request data', function () {
                     'commands' => 'up',
                     'start_position' => '10',
                 ],
-                'expected_message' => 'Invalid string format "10". Example: 1x1 or 0x1'
+                'expected_message' => 'Invalid string format "10". Example: 1x1 or 0x1',
             ],
             'case_2' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => '10x',
                 ],
-                'expected_message' => 'Invalid string format "10x". Example: 1x1 or 0x1'
+                'expected_message' => 'Invalid string format "10x". Example: 1x1 or 0x1',
             ],
             'case_3' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => 'x10',
                 ],
-                'expected_message' => 'Invalid string format "x10". Example: 1x1 or 0x1'
+                'expected_message' => 'Invalid string format "x10". Example: 1x1 or 0x1',
             ],
             'case_4' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => '10x10x10',
                 ],
-                'expected_message' => 'Invalid string format "10x10x10". Example: 1x1 or 0x1'
+                'expected_message' => 'Invalid string format "10x10x10". Example: 1x1 or 0x1',
             ],
             'case_5' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => 'QxQ',
                 ],
-                'expected_message' => 'Invalid string format "QxQ". Example: 1x1 or 0x1'
+                'expected_message' => 'Invalid string format "QxQ". Example: 1x1 or 0x1',
             ],
         ];
 
@@ -101,30 +102,30 @@ describe('validate request data', function () {
             'case_1' => [
                 'body_request' => [
                     'commands' => 'up',
-                    'start_position' => "101x101",
+                    'start_position' => '101x101',
                 ],
-                'expected_message' => 'Start position is out of bounds. Start_position: 101x101'
+                'expected_message' => 'Start position is out of bounds. Start_position: 101x101',
             ],
             'case_2' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => '-1x-1',
                 ],
-                'expected_message' => 'Start position is out of bounds. Start_position: -1x-1'
+                'expected_message' => 'Start position is out of bounds. Start_position: -1x-1',
             ],
             'case_3' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => '0x101',
                 ],
-                'expected_message' => 'Start position is out of bounds. Start_position: 0x101'
+                'expected_message' => 'Start position is out of bounds. Start_position: 0x101',
             ],
             'case_4' => [
                 'body_request' => [
                     'commands' => 'up',
                     'start_position' => '-1x0',
                 ],
-                'expected_message' => 'Start position is out of bounds. Start_position: -1x0'
+                'expected_message' => 'Start position is out of bounds. Start_position: -1x0',
             ],
         ];
 

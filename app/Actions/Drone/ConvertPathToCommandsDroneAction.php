@@ -2,23 +2,19 @@
 
 namespace App\Actions\Drone;
 
-use App\Exceptions\OutOfBoundException;
-use App\Models\DroneMovement\DroneMovement;
-use App\ValueObjects\Quad;
 use App\ValueObjects\Vector2D;
-use Symfony\Component\HttpFoundation\Response;
 
 class ConvertPathToCommandsDroneAction
 {
     /**
-     * @param Vector2D[] $path
+     * @param  Vector2D[]  $path
      * @return Vector2D[]
      */
     public function execute(array $path): array
     {
         $commands = [];
         for ($i = 1; $i < count($path); $i++) {
-            $commands[$i-1] = $path[$i]->subtract($path[$i-1]);
+            $commands[$i - 1] = $path[$i]->subtract($path[$i - 1]);
         }
 
         return $commands;

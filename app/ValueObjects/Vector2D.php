@@ -10,6 +10,7 @@ use JsonSerializable;
 class Vector2D implements Arrayable, Jsonable, JsonSerializable
 {
     private int $x;
+
     private int $y;
 
     public function __construct(int $x, int $y)
@@ -19,9 +20,8 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param string $string Example: 1x1 or 0x1
-     * @param string $separator
-     * @return Vector2D
+     * @param  string  $string Example: 1x1 or 0x1
+     *
      * @throws Vector2DInvalidArgumentException
      */
     public static function fromString(string $string, string $separator = 'x'): Vector2D
@@ -34,12 +34,13 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
         if (! $is_valid) {
             throw new Vector2DInvalidArgumentException("Invalid string format \"$string\". Example: 1x1 or 0x1");
         }
-        return new Vector2D((int)$parts[0], (int)$parts[1]);
+
+        return new Vector2D((int) $parts[0], (int) $parts[1]);
     }
 
     /**
-     * @param string $abbreviation Example: Left, Down, Up or Right
-     * @return Vector2D
+     * @param  string  $abbreviation Example: Left, Down, Up or Right
+     *
      * @throws Vector2DInvalidArgumentException
      */
     public static function fromAbbreviation(string $abbreviation): Vector2D

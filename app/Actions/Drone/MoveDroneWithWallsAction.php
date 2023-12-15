@@ -2,11 +2,9 @@
 
 namespace App\Actions\Drone;
 
-use App\Exceptions\OutOfBoundException;
 use App\Models\DroneMovement\DroneMovement;
 use App\ValueObjects\Quad;
 use App\ValueObjects\Vector2D;
-use Symfony\Component\HttpFoundation\Response;
 
 class MoveDroneWithWallsAction
 {

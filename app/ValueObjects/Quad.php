@@ -5,8 +5,11 @@ namespace App\ValueObjects;
 class Quad
 {
     private Vector2D $left_bottom;
+
     private Vector2D $right_bottom;
+
     private Vector2D $left_top;
+
     private Vector2D $right_top;
 
     public function __construct(Vector2D $left_bottom, Vector2D $right_bottom, Vector2D $left_top, Vector2D $right_top)
@@ -21,6 +24,7 @@ class Quad
     {
         $x_cells_count = $width - 1;
         $y_cells_count = $height - 1;
+
         return new static(
             Vector2D::zero(),
             new Vector2D($x_cells_count, 0),

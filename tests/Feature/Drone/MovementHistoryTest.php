@@ -58,7 +58,7 @@ describe('save movement history in DB with walls', function () {
     test('in bounds', function () {
         $body_request = [
             'commands' => 'up,Up,UP',
-            'has_walls' => true
+            'has_walls' => true,
         ];
 
         $response = $this->postJson(route('drones.move'), $body_request);
@@ -84,7 +84,7 @@ describe('save movement history in DB with walls', function () {
     test('in out of bounds', function () {
         $body_request = [
             'commands' => 'up,Up,UP,left',
-            'has_walls' => true
+            'has_walls' => true,
         ];
 
         $response = $this->postJson(route('drones.move'), $body_request);
@@ -97,7 +97,7 @@ describe('save movement history in DB with walls', function () {
     test('in out of bounds with history', function () {
         $body_request = [
             'commands' => 'up,Up,UP',
-            'has_walls' => true
+            'has_walls' => true,
         ];
 
         $this->postJson(route('drones.move'), $body_request);
@@ -114,7 +114,7 @@ describe('save movement history in DB without walls', function () {
     test('in bounds', function () {
         $body_request = [
             'commands' => 'up,Up,UP',
-            'has_walls' => false
+            'has_walls' => false,
         ];
 
         $response = $this->postJson(route('drones.move'), $body_request);
@@ -127,7 +127,7 @@ describe('save movement history in DB without walls', function () {
     test('in bounds with history', function () {
         $body_request = [
             'commands' => 'up,Up,UP',
-            'has_walls' => false
+            'has_walls' => false,
         ];
 
         $this->postJson(route('drones.move'), $body_request);
@@ -141,7 +141,7 @@ describe('save movement history in DB without walls', function () {
     test('in out of bounds', function () {
         $body_request = [
             'commands' => 'up,Up,UP,left',
-            'has_walls' => false
+            'has_walls' => false,
         ];
 
         $response = $this->postJson(route('drones.move'), $body_request);
@@ -154,7 +154,7 @@ describe('save movement history in DB without walls', function () {
     test('in out of bounds with history', function () {
         $body_request = [
             'commands' => 'up,Up,UP',
-            'has_walls' => false
+            'has_walls' => false,
         ];
 
         $this->postJson(route('drones.move'), $body_request);

@@ -14,7 +14,7 @@ class DroneMoveDTO
 
     public ?bool $has_walls;
 
-    public function __construct(array $commands, Vector2D $start_position = null, ?bool $has_walls = null)
+    public function __construct(array $commands, ?Vector2D $start_position = null, ?bool $has_walls = null)
     {
         $this->start_position = $start_position;
         $this->commands = $commands;
@@ -25,7 +25,7 @@ class DroneMoveDTO
     {
         $validated = $request->validated();
 
-        $commands = array_map( function (string $command) {
+        $commands = array_map(function (string $command) {
             return Vector2D::fromAbbreviation($command);
         }, explode(',', $validated['commands']));
 
