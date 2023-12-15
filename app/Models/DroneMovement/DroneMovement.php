@@ -3,10 +3,10 @@
 namespace App\Models\DroneMovement;
 
 use App\Casts\AsVector2D;
-use App\Models\Drone\Drone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class DroneMovement extends Model
 {
@@ -15,18 +15,20 @@ class DroneMovement extends Model
     protected $table = 'drone_movements';
 
     protected $casts = [
-        'position' => AsVector2D::class,
+        'start_position' => AsVector2D::class,
         'command' => AsVector2D::class,
+        'current_position' => AsVector2D::class,
     ];
 
     protected $fillable = [
-        'drone_id',
-        'position',
+        'start_position',
         'command',
+        'current_position',
     ];
 
-    public function drone(): BelongsTo
+    public function scopeLatestRecord(Builder $query): Builder
     {
-        return $this->belongsTo(Drone::class, 'drone_id', 'id');
+        return $query->orderByDesc('created_at')
+            ->orderByDesc('id');
     }
 }

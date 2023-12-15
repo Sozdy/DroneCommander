@@ -30,7 +30,6 @@ class DroneController extends Controller
             ->droneService
             ->calculateOptimalWay($drone_move_dto->start_position, $final_position);
 
-
         return response(
             App::make(
                 DroneMoveResponse::class,
