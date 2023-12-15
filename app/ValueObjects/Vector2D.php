@@ -2,19 +2,14 @@
 
 namespace App\ValueObjects;
 
-use App\Exceptions\ValueObjects\Vector2DInvalidArgumentException;
+use App\Exceptions\Vector2DInvalidArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
+use Symfony\Component\HttpFoundation\Response;
 
 class Vector2D implements Arrayable, Jsonable, JsonSerializable
 {
-    public static Vector2D $down;
-    public static Vector2D $left;
-    public static Vector2D $right;
-    public static Vector2D $up;
-    public static Vector2D $zero;
-
     private int $x;
     private int $y;
 
@@ -22,24 +17,25 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
     {
         $this->x = $x;
         $this->y = $y;
-
-        static::$down = new Vector2D(0, -1);
-        static::$left = new Vector2D(-1, 0);
-        static::$right = new Vector2D(1, 0);
-        static::$up = new Vector2D(0, 1);
-        static::$zero = new Vector2D(0, 0);
     }
 
     /**
      * @param string $string Example: 1x1 or 0x1
      * @param string $separator
      * @return Vector2D
+     * @throws Vector2DInvalidArgumentException
      */
-    public function fromString(string $string, string $separator = 'x'): Vector2D
+    public static function fromString(string $string, string $separator = 'x'): Vector2D
     {
         $parts = explode($separator, $string);
+        $is_valid = count($parts) === 2
+            && is_numeric($parts[0])
+            && is_numeric($parts[1]);
 
-        return new Vector2D((int) $parts[0], (int) $parts[1]);
+        if (! $is_valid) {
+            throw new Vector2DInvalidArgumentException("Invalid string format \"$string\". Example: 1x1 or 0x1");
+        }
+        return new Vector2D((int)$parts[0], (int)$parts[1]);
     }
 
     /**
@@ -47,17 +43,44 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
      * @return Vector2D
      * @throws Vector2DInvalidArgumentException
      */
-    public function fromAbbreviation(string $abbreviation): Vector2D
+    public static function fromAbbreviation(string $abbreviation): Vector2D
     {
         $strtolower_abbreviation = mb_strtolower($abbreviation);
 
         return match ($strtolower_abbreviation) {
-            'down' => static::$down,
-            'left' => static::$left,
-            'right' => static::$right,
-            'up' => static::$up,
-            default => throw new Vector2DInvalidArgumentException('Invalid abbreviation' . $abbreviation),
+            'down' => static::down(),
+            'left' => static::left(),
+            'right' => static::right(),
+            'up' => static::up(),
+            default => throw new Vector2DInvalidArgumentException(
+                "Invalid abbreviation \"$abbreviation\". Abbreviation can be only \"down, left, right, up\"",
+            ),
         };
+    }
+
+    public static function down(): Vector2D
+    {
+        return new Vector2D(0, -1);
+    }
+
+    public static function left(): Vector2D
+    {
+        return new Vector2D(-1, 0);
+    }
+
+    public static function right(): Vector2D
+    {
+        return new Vector2D(1, 0);
+    }
+
+    public static function up(): Vector2D
+    {
+        return new Vector2D(0, 1);
+    }
+
+    public static function zero(): Vector2D
+    {
+        return new Vector2D(0, 0);
     }
 
     public function getX(): float

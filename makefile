@@ -51,3 +51,7 @@ help:
 	@echo "$(GREEN)migrate$(RESET) - Migrate database"
 	@echo "$(GREEN)check-env$(RESET) - Check and copy .env file if not exists"
 	@echo "$(GREEN)local-down$(RESET) - Stop and remove running project containers"
+
+test:
+	@echo "${YELLOW}Running tests...${RESET}"
+	@docker exec -it dronecommander-drone-commander-php-fpm-1 ./vendor/bin/pest

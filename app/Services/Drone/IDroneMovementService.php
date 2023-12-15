@@ -5,7 +5,7 @@ namespace App\Services\Drone;
 use App\DTO\Drone\DroneMoveDTO;
 use App\ValueObjects\Vector2D;
 
-interface IDroneService
+interface IDroneMovementService
 {
     public function calculatePosition(DroneMoveDTO $drone_move_dto): Vector2D;
 
