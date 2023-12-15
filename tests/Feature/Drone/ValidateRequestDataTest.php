@@ -1,7 +1,6 @@
 <?php
 use Symfony\Component\HttpFoundation\Response;
 
-
 describe('validate request data', function () {
     test('commands required', function () {
         $data = [
@@ -96,6 +95,44 @@ describe('validate request data', function () {
             $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     });
-});
 
-//describe('')
+    test('start_position must be in bounds', function () {
+        $data = [
+            'case_1' => [
+                'body_request' => [
+                    'commands' => 'up',
+                    'start_position' => "101x101",
+                ],
+                'expected_message' => 'Start position is out of bounds. Start_position: 101x101'
+            ],
+            'case_2' => [
+                'body_request' => [
+                    'commands' => 'up',
+                    'start_position' => '-1x-1',
+                ],
+                'expected_message' => 'Start position is out of bounds. Start_position: -1x-1'
+            ],
+            'case_3' => [
+                'body_request' => [
+                    'commands' => 'up',
+                    'start_position' => '0x101',
+                ],
+                'expected_message' => 'Start position is out of bounds. Start_position: 0x101'
+            ],
+            'case_4' => [
+                'body_request' => [
+                    'commands' => 'up',
+                    'start_position' => '-1x0',
+                ],
+                'expected_message' => 'Start position is out of bounds. Start_position: -1x0'
+            ],
+        ];
+
+        foreach ($data as $case) {
+            $response = $this->postJson(route('drones.move'), $case['body_request']);
+
+            $response->assertJsonFragment(['message' => $case['expected_message']]);
+            $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    });
+});

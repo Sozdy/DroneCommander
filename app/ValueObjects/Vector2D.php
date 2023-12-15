@@ -45,7 +45,7 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
      */
     public static function fromAbbreviation(string $abbreviation): Vector2D
     {
-        $strtolower_abbreviation = mb_strtolower($abbreviation);
+        $strtolower_abbreviation = mb_strtolower(trim($abbreviation));
 
         return match ($strtolower_abbreviation) {
             'down' => static::down(),
@@ -141,6 +141,11 @@ class Vector2D implements Arrayable, Jsonable, JsonSerializable
     public function toString(): string
     {
         return sprintf('%s%s%s', $this->x, 'x', $this->y);
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     public function toArray(): array

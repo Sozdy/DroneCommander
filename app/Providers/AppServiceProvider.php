@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\Drone\DroneMovementMovementService;
+use App\Services\Drone\DroneMovementService;
 use App\Services\Drone\IDroneMovementService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             IDroneMovementService::class,
-            DroneMovementMovementService::class
+            DroneMovementService::class
         );
     }
 }
